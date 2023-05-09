@@ -19,20 +19,25 @@ def nextStep(step, totalLength):
     return 0
   return next
 
-def printPage(msg, step = 0, border = '*'):
+def printPage(msg, step = 0):
   clearScreen()
-  print(str(border) * size.columns)
   
+  lines = msg.splitlines()
   totalLength = None
-  for line in msg.splitlines():
+  totalHeight = len(lines)
+
+  beforeNewlines = math.floor((size.lines - totalHeight) / 2)
+  print("\n" * beforeNewlines)
+
+  for line in lines:
     totalLength = totalLength or len(line)
     wrapped = line[step:(size.columns + step)]
     if len(wrapped) < size.columns:
       wrapped = wrapped + line[0:(size.columns - len(wrapped))]
     print(wrapped)
 
-  print(str(border) * size.columns)
-  print()
+  print("\n" * (size.lines - totalHeight - beforeNewlines))
+
   return nextStep(step, totalLength)
 
 
